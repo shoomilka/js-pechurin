@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pechurin Variant</title>
+
+    <link rel="stylesheet" href="app.css">
+    <style>
+        p{padding:10px;}
+    </style>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Pechurin Variant</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+    <h1>Обчислити варіант за прізвищем</h1>
+    <hr/>
+
+    <div class="col-md-10">
+        <form accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" action="">
+                <div class="form-group ">
+                    <label for="name" class="col-sm-3 control-label">Прізвище</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" name="name" type="text" id="name">
+                    </div>
+                </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-3">
+                    <a class="btn btn-primary form-control" onclick="calcu()">Обчислити</a>
+                </div>
+            </div>
+        </form>
+
+        <div id="result" class="col-md-10">
+        </div>
+    </div>
+</div>
+
+	<script type="text/javascript">
+
+        function getStr(a){
+            var result = a.toString(2).split("").reverse().join("");
+            result = result.substring(0, 4);
+            result = result.split("").reverse().join("");
+            return result;
+        }
+
+        function calcu(){
+            var div = document.getElementById('result');
+            var name = document.getElementById('name').value.toUpperCase();
+            var i;
+            var t = '';
+
+            div.innerHTML = '<p class="bg-info">in hex</p>';
+            for(i = 0; i < name.length; i++){
+                div.innerHTML += '<p><code>' + name.charAt(i) + ' => ' + name.charCodeAt(i).toString(16) + '</code></p>';
+            }
+            div.innerHTML += '<p class="bg-info">in bin</p>';
+            for(i = 0; i < name.length; i++){
+                div.innerHTML += '<p><code>' + name.charAt(i) + ' => ' + name.charCodeAt(i).toString(16)
+                    + ' => 0' + (name.charCodeAt(i) >> 4).toString(2) + ' ' + getStr(name.charCodeAt(i));
+                    + '</p></code>';
+                t += getStr(name.charCodeAt(i)) + ' ';
+            }
+
+            t = t.substr(0, t.length-1);
+            div.innerHTML += '<p><code>' + t + '</code></p>';
+            div.innerHTML += '<p class="bg-info">right ten magic digits:</p>';
+            div.innerHTML += '<p><code>' + t.slice(-12) + '</code></p>';
+            div.innerHTML += '<p class="bg-danger">Good luck!</p>';
+        }
+    </script>
+</body>
+</html>
